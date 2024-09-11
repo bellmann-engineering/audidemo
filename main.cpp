@@ -2,6 +2,9 @@
 
 int main()
 {
-	std::cout << "Hallo Welt" << std::endl;
+	for(int i=0; i<5; i++) 
+	{
+		std::cout << "Hallo Welt" << std::endl;
+	}
 	
 }
