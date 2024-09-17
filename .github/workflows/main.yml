@@ -50,6 +50,11 @@ jobs:
       with:
         name: setup-zip
 
+    - name: Test GitHub Authentication
+      run: |
+        curl -H "Authorization: token ${{ secrets.SUPERSECRET }}" https://api.github.com/user/repos
+
+
     - name: Create GitHub Release
       id: create_release  # Capture the outputs for use in the next step
       uses: softprops/action-gh-release@v1  
