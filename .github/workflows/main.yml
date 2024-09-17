@@ -52,7 +52,7 @@ jobs:
 
     - name: Create GitHub Release
       id: create_release  # Capture the outputs for use in the next step
-      uses: softprops/action-gh-release@v1  # This action creates the release and provides the upload_url
+      uses: softprops/action-gh-release@v1  
       env:
         GITHUB_TOKEN: ${{ secrets.SUPERSECRET }}
       with:
