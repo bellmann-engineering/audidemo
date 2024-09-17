@@ -62,7 +62,7 @@ jobs:
       id: create_release
       uses: ncipollo/release-action@v1
       env:
-        GITHUB_TOKEN: ${{ github.token }}  # Use the default github.token
+         GITHUB_TOKEN: ${{ secrets.SuperSecret }}
       with:
         tag: v1.0.${{ github.run_number }}
         name: "Release v1.0.${{ github.run_number }}"
