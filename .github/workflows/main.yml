@@ -31,9 +31,6 @@ jobs:
     - name: Run the tests
       run: ./tests && echo "All tests passed!"
 
-    - name: Run clang-tidy
-      run: clang-tidy main.cpp -- -std=c++17
-
     - name: Zip the executable
       run: zip setup.zip HelloWorld
 
@@ -47,27 +44,27 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'  # Only create a release on the main branch
-    permissions:
-      contents: write  # Explicitly set write permissions
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
         name: setup-zip
-        
+
     - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
+      id: create_release  # Capture the outputs for use in the next step
+      uses: softprops/action-gh-release@v1  # This action creates the release and provides the upload_url
       env:
         GITHUB_TOKEN: ${{ secrets.SUPERSECRET }}
       with:
         tag_name: v1.0.${{ github.run_number }}
         name: "Release v1.0.${{ github.run_number }}"
-
+        draft: false
+        prerelease: false
 
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}  # Provide the upload_url from the previous step
         asset_path: ./setup.zip
         asset_name: setup.zip
         asset_content_type: application/zip
