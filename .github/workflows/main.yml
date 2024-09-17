@@ -1,4 +1,4 @@
-name: C++ CI
+name: C++ CI/CD
 
 on:
   push:
@@ -28,8 +28,47 @@ jobs:
     - name: Run the application
       run: ./HelloWorld
 
+    - name: Run the tests
+      run: ./tests && echo "All tests passed!"
+
     - name: Run clang-tidy
       run: clang-tidy main.cpp -- -std=c++17
 
-    - name: Run the tests
-      run: ./tests && echo "All tests passed!"
+    - name: Zip the executable
+      run: zip setup.zip HelloWorld
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: setup-zip
+        path: ./setup.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Only create a release on the main branch
+
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: setup-zip
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        release_name: "Release v1.0.${{ github.run_number }}"
+        draft: false
+        prerelease: false
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./setup.zip
+        asset_name: setup.zip
+        asset_content_type: application/zip
