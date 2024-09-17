@@ -2,11 +2,9 @@
 
 int main()
 {
-	for(int i=0; 
-		i<5; 
-		i++) 
-	{
-		std::cout << "Hallo Welt" << std::endl;
-	}
-	
+    const int loop_count = 5;  // A const integer, no need for constexpr here
+    for (int i = 0; i < loop_count; ++i)
+    {
+        std::cout << "Hallo Welt\n";
+    }
 }
