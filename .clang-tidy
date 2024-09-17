@@ -1,5 +1,22 @@
-Checks: '-*,clang-analyzer-*,modernize-*'
-WarningsAsErrors: ''
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  google-*,
+  modernize-*,
+  performance-*,
+  readability-*,
+WarningsAsErrors: '*'
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
 FormatStyle: none
+InheritParentConfig: true
+User: ''
+CheckOptions:
+  - key:             readability-identifier-naming.VariableCase
+    value:           lower_case
+  - key:             readability-identifier-naming.FunctionCase
+    value:           camelBack
+  - key:             cppcoreguidelines-pro-type-vararg.ParameterConstraint
+    value:           'disabled'
