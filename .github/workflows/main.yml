@@ -47,13 +47,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'  # Only create a release on the main branch
-
+    permissions:
+      contents: write  # Explicitly set write permissions
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
         name: setup-zip
-
+  
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
@@ -64,7 +65,7 @@ jobs:
         release_name: "Release v1.0.${{ github.run_number }}"
         draft: false
         prerelease: false
-
+  
     - name: Upload release asset
       uses: actions/upload-release-asset@v1
       with:
