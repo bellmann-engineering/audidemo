@@ -20,3 +20,5 @@ CheckOptions:
     value:           camelBack
   - key:             cppcoreguidelines-pro-type-vararg.ParameterConstraint
     value:           'disabled'
+  - key:             modernize-use-trailing-return-type
+    value:           'false'  // Disable trailing return type check
