@@ -50,13 +50,7 @@ jobs:
       with:
         name: setup-zip
 
-    - name: Test GitHub Authentication
-      run: |
-        curl -H "Authorization: token ${{ secrets.SUPERSECRET }}" https://api.github.com/user/repos
-
-
     - name: Create GitHub Release
-      id: create_release  # Capture the outputs for use in the next step
       uses: softprops/action-gh-release@v1  
       env:
         GITHUB_TOKEN: ${{ secrets.SUPERSECRET }}
@@ -65,11 +59,3 @@ jobs:
         name: "Release v1.0.${{ github.run_number }}"
         draft: false
         prerelease: false
-
-    - name: Upload release asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}  # Provide the upload_url from the previous step
-        asset_path: ./setup.zip
-        asset_name: setup.zip
-        asset_content_type: application/zip
