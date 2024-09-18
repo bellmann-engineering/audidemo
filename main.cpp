@@ -7,4 +7,8 @@ int main()
     {
         std::cout << "Hallo Welt\n";
     }
+
+    if (1) {
+        std::cout << "experiment";
+    }
 }
