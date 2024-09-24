@@ -2,7 +2,7 @@
 
 int main()
 {
-    const int loop_count = 16  // A const integer, no need for constexpr here
+    const int loop_count = 16;
     for (int i = 0; i < loop_count; ++i)
     {
         std::cout << "Hallo Welt\n";
